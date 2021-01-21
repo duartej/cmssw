@@ -61,6 +61,10 @@ private:
   // Gap of np column
   const float np_column_gap_;
 
+  // PROV
+  const int intercroc_mincol_;
+  const int intercroc_maxcol_;
+
   // Check if a carrier is inside the column: The point should
   // be described in the pixel cell frame
   const bool is_inside_n_column_(const LocalPoint& p, const float& sensor_thickness) const;

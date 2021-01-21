@@ -61,7 +61,14 @@ Pixel3DDigitizerAlgorithm::Pixel3DDigitizerAlgorithm(const edm::ParameterSet& co
           1.0_um),
       np_column_gap_(
           (conf.getParameter<edm::ParameterSet>("Pixel3DDigitizerAlgorithm").getParameter<double>("NPColumnGap")) *
-          1.0_um) {
+          1.0_um), 
+      // PROVISIONAL -- INTER-CROC REGION
+      intercroc_mincol_(
+          (conf.getParameter<edm::ParameterSet>("Pixel3DDigitizerAlgorithm").getParameter<int>("InterCROCMinCol"))),
+      intercroc_maxcol_(
+          (conf.getParameter<edm::ParameterSet>("Pixel3DDigitizerAlgorithm").getParameter<int>("InterCROCMaxCol")))
+                    {
+          
   // XXX - NEEDED?
   pixelFlag_ = true;
 
@@ -399,6 +406,10 @@ void Pixel3DDigitizerAlgorithm::induce_signal(const PSimHit& hit,
   for (const auto& pt : collection_points) {
     // Extract corresponding channel (position is already given in pixel indices)
     const int channel = pixelToChannel(pt.position().x(), pt.position().y());
+
+    if( pt.position().y() >= intercroc_mincol_ && pt.position().y() <= intercroc_maxcol_ ) {
+        continue;
+    }
 
     float corr_time = hit.tof() - pixdet->surface().toGlobal(hit.localPosition()).mag() * c_inv;
     if (makeDigiSimLinks_) {

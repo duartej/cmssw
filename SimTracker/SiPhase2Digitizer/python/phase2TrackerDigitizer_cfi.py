@@ -88,7 +88,9 @@ phase2TrackerDigitizer = cms.PSet(
         SigmaCoeff = cms.double(1.80),
         NPColumnRadius = cms.double(4.0),
         OhmicColumnRadius = cms.double(4.0),
-        NPColumnGap = cms.double(46.0)
+        NPColumnGap = cms.double(46.0),
+        InterCROCMinCol = cms.int32(216),
+        InterCROCMaxCol = cms.int32(217)
     ),
 
 #Pixel in PS Module
